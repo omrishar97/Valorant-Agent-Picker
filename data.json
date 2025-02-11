@@ -1,0 +1,26 @@
+{
+    "agents": [
+        { "name": "Brimstone", "image": "images/Brimstone.png" },
+        { "name": "Viper", "image": "images/Viper.png" },
+        { "name": "Omen", "image": "images/Omen.png" },
+        { "name": "Phoenix", "image": "images/Phoenix.png" },
+        { "name": "Jett", "image": "images/Jett.png" },
+        { "name": "Sage", "image": "images/Sage.png" },
+        { "name": "Reyna", "image": "images/Reyna.png" },
+        { "name": "Cypher", "image": "images/Cypher.png" },
+        { "name": "Sova", "image": "images/Sova.png" },
+        { "name": "Breach", "image": "images/Breach.png" },
+        { "name": "Raze", "image": "images/Raze.png" },
+        { "name": "Killjoy", "image": "images/Killjoy.png" },
+        { "name": "Skye", "image": "images/Skye.png" },
+        { "name": "Yoru", "image": "images/Yoru.png" },
+        { "name": "Astra", "image": "images/Astra.png" },
+        { "name": "KAY/O", "image": "images/KAYO.png" },
+        { "name": "Chamber", "image": "images/Chamber.png" },
+        { "name": "Neon", "image": "images/Neon.png" },
+        { "name": "Fade", "image": "images/Fade.png" },
+        { "name": "Harbor", "image": "images/Harbor.png" },
+        { "name": "Gekko", "image": "images/Gekko.png" },
+        { "name": "Deadlock", "image": "images/Deadlock.png" }
+    ]
+}
