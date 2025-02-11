@@ -1,5 +1,5 @@
 {
-    "images": [
+    "agents": [
         { "src": "images/Astra.png", "name": "Astra" },
         { "src": "images/Breach.png", "name": "Breach" },
         { "src": "images/Brimstone.png", "name": "Brimstone" },
