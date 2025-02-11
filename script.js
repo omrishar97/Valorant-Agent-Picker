@@ -1,40 +1,37 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const imageContainer = document.getElementById("image-container");
-    const randomizeButton = document.getElementById("randomize-btn");
-    
-    fetch("data.json")
-        .then(response => response.json())
-        .then(data => {
-            const agents = data.agents;
+// Wait for the DOM to fully load
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("generateButton");
+    const imageContainer = document.getElementById("imageContainer");
+    const nameContainer = document.getElementById("nameContainer");
 
-            randomizeButton.addEventListener("click", function () {
-                if (agents.length === 0) {
-                    console.error("No agents found in data.json!");
-                    return;
-                }
+    // Function to fetch and display a random image and name from the data
+    function generateRandomImage() {
+        fetch('data.json')
+            .then(response => response.json())  // Parse the JSON from the file
+            .then(data => {
+                // Get a random image object from the images array
+                const randomImage = data.images[Math.floor(Math.random() * data.images.length)];
 
-                const randomIndex = Math.floor(Math.random() * agents.length);
-                const randomAgent = agents[randomIndex];
+                // Create an image element for the random image
+                const img = document.createElement("img");
+                img.src = randomImage.src;  // Set the source from the random image
+                img.alt = randomImage.name; // Use the name as the alt text
+                img.style.width = "200px"; // Set the width of the image (optional)
+                img.style.height = "auto"; // Keep the aspect ratio
 
-                let imgElement = imageContainer.querySelector("img");
-                if (!imgElement) {
-                    imgElement = document.createElement("img");
-                    imageContainer.appendChild(imgElement);
-                }
+                // Create a text element for the agent name
+                const name = document.createElement("p");
+                name.textContent = randomImage.name; // Set the name text
 
-                let nameElement = imageContainer.querySelector("p");
-                if (!nameElement) {
-                    nameElement = document.createElement("p");
-                    nameElement.style.fontSize = "20px";
-                    nameElement.style.fontWeight = "bold";
-                    nameElement.style.textAlign = "center";
-                    imageContainer.appendChild(nameElement);
-                }
+                // Clear previous image and name, then append the new ones
+                imageContainer.innerHTML = ""; // Clear previous image
+                nameContainer.innerHTML = "";   // Clear previous name
+                imageContainer.appendChild(img);
+                nameContainer.appendChild(name);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
 
-                imgElement.src = randomAgent.image;
-                imgElement.alt = randomAgent.name;
-                nameElement.textContent = randomAgent.name;
-            });
-        })
-        .catch(error => console.error("Error fetching data.json:", error));
+    // Set up the button click listener to trigger the image generation
+    button.addEventListener("click", generateRandomImage);
 });
