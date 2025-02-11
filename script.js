@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", function() {
         imageContainer.appendChild(img);
         nameContainer.appendChild(name);
 
+        // Add classes to trigger transitions
+        img.classList.add("show");
+        name.classList.add("show");
+
         // Hide loading spinner and re-enable button
         spinner.style.display = "none";
         button.disabled = false;

@@ -20,14 +20,27 @@ body {
 
 /* Hero Section */
 .hero {
-    background: url('https://images.unsplash.com/photo-1506748686215-b1cd05599880') no-repeat center center; /* Updated background image */
+    background: url('https://images.unsplash.com/photo-1506748686215-b1cd05599880') no-repeat center center;
     background-size: cover;
     height: 100vh;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent overlay */
+}
+
+.hero h1, .hero p {
     position: relative;
 }
 
@@ -98,6 +111,14 @@ body {
     height: auto; /* Retain original aspect ratio */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px); /* Start from below */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+#imageContainer img.show {
+    opacity: 1;
+    transform: translateY(0);  /* Slide to its normal position */
 }
 
 /* Agent name container styling */
@@ -106,6 +127,12 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: #333;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+#nameContainer.show {
+    opacity: 1;
 }
 
 /* Responsiveness: Adjustments for smaller screens */
@@ -146,21 +173,6 @@ body {
     margin-top: 20px;
 }
 
-#imageContainer img {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-#nameContainer {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-#imageContainer img.show,
-#nameContainer.show {
-    opacity: 1;
-}
-
 .spinner {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
@@ -175,29 +187,33 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 768px) {
-    #imageContainer img {
-        max-width: 100%;
-        height: auto;
-    }
-    #nameContainer {
-        font-size: 1.2em;
-    }
-}
-
 #imageContainer img {
     opacity: 0;
-    transform: translateY(20px); /* Start from below */
+    transform: translateY(20px);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 #imageContainer img.show {
     opacity: 1;
-    transform: translateY(0);  /* Slide to its normal position */
+    transform: translateY(0);
 }
 
 /* Dark theme styling */
 .dark-theme {
     background-color: #121212;
     color: #ffffff;
+}
+
+.dark-theme #generateButton {
+    background-color: #555;
+    color: white;
+}
+
+.dark-theme .cta-button {
+    background-color: #ff6f61;
+    color: white;
+}
+
+.dark-theme .cta-button:hover {
+    background-color: #ff4b3a;
 }
