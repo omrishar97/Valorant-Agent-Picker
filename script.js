@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const img = document.createElement("img");
                 img.src = randomImage.src;  // Set the source from the random image
                 img.alt = randomImage.name; // Use the name as the alt text
-                img.style.width = "200px"; // Set the width of the image (optional)
+                img.style.width = "780px"; // Set the width of the image (optional)
                 img.style.height = "auto"; // Keep the aspect ratio
 
                 // Create a text element for the agent name
