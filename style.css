@@ -50,19 +50,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: auto; /* Let the container size depend on the image size */
+    height: auto;
 }
 
 /* Image styling (keeping original size) */
 #imageContainer img {
-    width: auto;    /* Retain the image's original width */
-    height: auto;   /* Retain the image's original height */
-    max-width: none; /* Prevent any scaling */
-    max-height: none; /* Prevent any scaling */
+    display: block;
+    margin: 10px auto; /* Centers the image */
+    max-width: 100%; /* Make sure it fits within the container */
+    height: auto; /* Retain original aspect ratio */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    display: block;  /* Prevents space below the image */
-    margin: 10px auto; /* Centers the image and adds space */
 }
 
 /* Agent name container styling */
