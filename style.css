@@ -18,6 +18,41 @@ body {
     flex-direction: column;
 }
 
+/* Hero Section */
+.hero {
+    background: url('https://your-image-url.com/valorant-background.jpg') no-repeat center center; /* Replace with an actual image URL */
+    background-size: cover;
+    height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background-color: #ff6f61;
+    padding: 15px 30px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+.cta-button:hover {
+    background-color: #ff4b3a;
+}
+
 /* Container for the button, image, and name */
 .container {
     background-color: white;
@@ -86,41 +121,6 @@ body {
     #nameContainer {
         font-size: 18px;
     }
-}
-
-/* Hero Section */
-.hero {
-    background: url('your-image.jpg') no-repeat center center;
-    background-size: cover;
-    height: 100vh;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-}
-
-.cta-button {
-    background-color: #ff6f61;
-    padding: 15px 30px;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-}
-
-.cta-button:hover {
-    background-color: #ff4b3a;
 }
 
 @media (max-width: 768px) {
