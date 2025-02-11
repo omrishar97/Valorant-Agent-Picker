@@ -32,4 +32,55 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Set up the button click listener to trigger the image generation
     button.addEventListener("click", generateRandomImage);
+document.getElementById("generateButton").addEventListener("click", function() {
+    // Show loading spinner
+    document.getElementById("loadingSpinner").style.display = "block";
+    document.getElementById("imageContainer").innerHTML = ""; // Clear previous agent image
+    document.getElementById("nameContainer").innerText = ""; // Clear previous name
+    
+    // Disable the button
+    document.getElementById("generateButton").disabled = true;
+
+    // Generate random agent
+    setTimeout(function() {
+        const randomIndex = Math.floor(Math.random() * agents.length);
+        const selectedAgent = agents[randomIndex];
+
+        // Display the agent's image and name
+        document.getElementById("imageContainer").innerHTML = `<img src="${selectedAgent.image}" alt="${selectedAgent.name}">`;
+        document.getElementById("nameContainer").innerText = selectedAgent.name;
+
+        // Hide loading spinner and re-enable button
+        document.getElementById("loadingSpinner").style.display = "none";
+        document.getElementById("generateButton").disabled = false;
+    }, 1000); // Simulate a 1 second loading time
+
+document.getElementById("generateButton").addEventListener("click", function() {
+    // Show loading spinner
+    document.getElementById("loadingSpinner").style.display = "block";
+    document.getElementById("imageContainer").innerHTML = ""; // Clear previous agent image
+    document.getElementById("nameContainer").innerText = ""; // Clear previous name
+    
+    // Disable the button
+    document.getElementById("generateButton").disabled = true;
+
+    // Generate random agent
+    setTimeout(function() {
+        const randomIndex = Math.floor(Math.random() * agents.length);
+        const selectedAgent = agents[randomIndex];
+
+        // Display the agent's image and name
+        const imgElement = `<img src="${selectedAgent.image}" alt="${selectedAgent.name}">`;
+        document.getElementById("imageContainer").innerHTML = imgElement;
+        document.getElementById("nameContainer").innerText = selectedAgent.name;
+
+        // Add classes for transition effect
+        document.querySelector("#imageContainer img").classList.add("show");
+        document.querySelector("#nameContainer").classList.add("show");
+
+        // Hide loading spinner and re-enable button
+        document.getElementById("loadingSpinner").style.display = "none";
+        document.getElementById("generateButton").disabled = false;
+    }, 1000); // Simulate a 1 second loading time
 });
+

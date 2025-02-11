@@ -137,3 +137,25 @@ body {
         padding: 10px 20px;
     }
 }
+
+#loadingSpinner {
+    font-size: 1.2rem;
+    color: #ff6f61;
+    margin-top: 20px;
+}
+
+#imageContainer img {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#nameContainer {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#imageContainer img.show,
+#nameContainer.show {
+    opacity: 1;
+}
+
