@@ -12,7 +12,45 @@
         <div id="imageContainer"></div>  <!-- Image will appear here -->
         <div id="nameContainer"></div>   <!-- Agent name will appear here -->
     </div>
-<div id="loadingSpinner" style="display: none;">Loading...</div>
+    <div id="loadingSpinner" style="display: none;">Loading...</div>
+    <div id="spinner" class="spinner" style="display: none;"></div>
+    
+    <!-- Reset Button -->
+    <button id="resetButton">Reset</button>
+    
+    <!-- Image Placeholder (if needed) -->
+    <img src="image.jpg" alt="Description of the image" role="img">
+
+    <!-- Search Input -->
+    <input type="text" id="searchInput" placeholder="Search for an agent...">
+    
+    <!-- Dark Mode Toggle Button -->
+    <button id="theme-toggle" class="cta-button">Toggle Dark Mode</button>
+
+    <script>
+        // Get the theme toggle button and the body element
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Check if the user has a saved preference for the theme (dark or light)
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+        }
+
+        // Toggle the theme on button click
+        themeToggleButton.addEventListener('click', () => {
+            // If dark theme is active, switch to light theme and vice versa
+            body.classList.toggle('dark-theme');
+            
+            // Save the user's theme preference in localStorage
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark-theme');
+            } else {
+                localStorage.setItem('theme', '');
+            }
+        });
+    </script>
 
     <script src="script.js"></script>
 </body>

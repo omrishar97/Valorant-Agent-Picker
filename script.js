@@ -3,84 +3,104 @@ document.addEventListener("DOMContentLoaded", function() {
     const button = document.getElementById("generateButton");
     const imageContainer = document.getElementById("imageContainer");
     const nameContainer = document.getElementById("nameContainer");
+    const spinner = document.getElementById("loadingSpinner");
+    const searchInput = document.getElementById("searchInput");
+    const resetButton = document.getElementById("resetButton");
+    const toggleThemeButton = document.getElementById("toggleTheme");
+
+    // Preload images to improve performance
+    const preloadImages = (images) => {
+        images.forEach(image => {
+            const img = new Image();
+            img.src = image.src; // Preload the image
+        });
+    };
+
+    // Fetch data from the JSON file once the page is loaded
+    let data = []; // Placeholder for the fetched data
+    fetch('data.json')
+        .then(response => response.json())
+        .then(fetchedData => {
+            data = fetchedData.images; // Save the images data to use later
+            preloadImages(data); // Preload images
+        })
+        .catch(error => console.error('Error fetching data:', error));
 
     // Function to fetch and display a random image and name from the data
     function generateRandomImage() {
-        fetch('data.json')
-            .then(response => response.json())  // Parse the JSON from the file
-            .then(data => {
-                // Get a random image object from the images array
-                const randomImage = data.images[Math.floor(Math.random() * data.images.length)];
+        spinner.style.display = "block";  // Show loading spinner
+        imageContainer.innerHTML = "";   // Clear previous agent image
+        nameContainer.innerText = "";    // Clear previous name
 
-                // Create an image element for the random image
-                const img = document.createElement("img");
-                img.src = randomImage.src;  // Set the source from the random image
-                img.alt = randomImage.name; // Use the name as the alt text
+        // Disable the button
+        button.disabled = true;
 
-                // Create a text element for the agent name
-                const name = document.createElement("p");
-                name.textContent = randomImage.name; // Set the name text
+        // Get a random image object from the images array
+        const randomImage = data[Math.floor(Math.random() * data.length)];
 
-                // Clear previous image and name, then append the new ones
-                imageContainer.innerHTML = ""; // Clear previous image
-                nameContainer.innerHTML = "";   // Clear previous name
-                imageContainer.appendChild(img);
-                nameContainer.appendChild(name);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        // Create an image element for the random image
+        const img = new Image();
+        img.src = randomImage.src;  // Set the source from the random image
+        img.alt = randomImage.name; // Use the name as the alt text
+
+        // Add error handling
+        img.onerror = function() {
+            img.src = 'fallback_image_url.jpg';  // Set a fallback image
+            img.alt = 'Image failed to load';
+        };
+
+        // Create a text element for the agent name
+        const name = document.createElement("p");
+        name.textContent = randomImage.name; // Set the name text
+
+        // Clear previous image and name, then append the new ones
+        imageContainer.innerHTML = ""; // Clear previous image
+        nameContainer.innerHTML = "";   // Clear previous name
+        imageContainer.appendChild(img);
+        nameContainer.appendChild(name);
+
+        // Hide loading spinner and re-enable button
+        spinner.style.display = "none";
+        button.disabled = false;
+
+        // Save the selected agent's name to localStorage
+        localStorage.setItem("lastAgent", randomImage.name);
     }
 
     // Set up the button click listener to trigger the image generation
     button.addEventListener("click", generateRandomImage);
-document.getElementById("generateButton").addEventListener("click", function() {
-    // Show loading spinner
-    document.getElementById("loadingSpinner").style.display = "block";
-    document.getElementById("imageContainer").innerHTML = ""; // Clear previous agent image
-    document.getElementById("nameContainer").innerText = ""; // Clear previous name
-    
-    // Disable the button
-    document.getElementById("generateButton").disabled = true;
 
-    // Generate random agent
-    setTimeout(function() {
-        const randomIndex = Math.floor(Math.random() * agents.length);
-        const selectedAgent = agents[randomIndex];
+    // Reset button functionality
+    resetButton.addEventListener("click", function() {
+        imageContainer.innerHTML = "";
+        nameContainer.innerHTML = "";
+        // Optionally, reset the image or text to a default state
+    });
 
-        // Display the agent's image and name
-        document.getElementById("imageContainer").innerHTML = `<img src="${selectedAgent.image}" alt="${selectedAgent.name}">`;
-        document.getElementById("nameContainer").innerText = selectedAgent.name;
+    // Show last selected agent from localStorage if available
+    const lastAgent = localStorage.getItem("lastAgent");
+    if (lastAgent) {
+        nameContainer.innerText = lastAgent;
+    }
 
-        // Hide loading spinner and re-enable button
-        document.getElementById("loadingSpinner").style.display = "none";
-        document.getElementById("generateButton").disabled = false;
-    }, 1000); // Simulate a 1 second loading time
+    // Search functionality
+    searchInput.addEventListener("input", function(event) {
+        const searchTerm = event.target.value.toLowerCase();
+        const filteredAgents = data.filter(agent => agent.name.toLowerCase().includes(searchTerm));
 
-document.getElementById("generateButton").addEventListener("click", function() {
-    // Show loading spinner
-    document.getElementById("loadingSpinner").style.display = "block";
-    document.getElementById("imageContainer").innerHTML = ""; // Clear previous agent image
-    document.getElementById("nameContainer").innerText = ""; // Clear previous name
-    
-    // Disable the button
-    document.getElementById("generateButton").disabled = true;
+        // Update display with filtered agents
+        if (filteredAgents.length > 0) {
+            const randomImage = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
+            nameContainer.innerText = randomImage.name;
+            imageContainer.innerHTML = `<img src="${randomImage.src}" alt="${randomImage.name}">`;
+        } else {
+            nameContainer.innerText = "No agent found";
+            imageContainer.innerHTML = "";
+        }
+    });
 
-    // Generate random agent
-    setTimeout(function() {
-        const randomIndex = Math.floor(Math.random() * agents.length);
-        const selectedAgent = agents[randomIndex];
-
-        // Display the agent's image and name
-        const imgElement = `<img src="${selectedAgent.image}" alt="${selectedAgent.name}">`;
-        document.getElementById("imageContainer").innerHTML = imgElement;
-        document.getElementById("nameContainer").innerText = selectedAgent.name;
-
-        // Add classes for transition effect
-        document.querySelector("#imageContainer img").classList.add("show");
-        document.querySelector("#nameContainer").classList.add("show");
-
-        // Hide loading spinner and re-enable button
-        document.getElementById("loadingSpinner").style.display = "none";
-        document.getElementById("generateButton").disabled = false;
-    }, 1000); // Simulate a 1 second loading time
+    // Toggle dark/light theme
+    toggleThemeButton.addEventListener("click", function() {
+        document.body.classList.toggle("dark-theme");
+    });
 });
-

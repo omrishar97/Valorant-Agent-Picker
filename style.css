@@ -20,7 +20,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: url('https://your-image-url.com/valorant-background.jpg') no-repeat center center; /* Replace with an actual image URL */
+    background: url('https://images.unsplash.com/photo-1506748686215-b1cd05599880') no-repeat center center; /* Updated background image */
     background-size: cover;
     height: 100vh;
     color: white;
@@ -28,6 +28,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
 }
 
 .hero h1 {
@@ -40,6 +41,7 @@ body {
     margin-bottom: 30px;
 }
 
+/* Call to Action (CTA) button styling */
 .cta-button {
     background-color: #ff6f61;
     padding: 15px 30px;
@@ -159,3 +161,43 @@ body {
     opacity: 1;
 }
 
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    #imageContainer img {
+        max-width: 100%;
+        height: auto;
+    }
+    #nameContainer {
+        font-size: 1.2em;
+    }
+}
+
+#imageContainer img {
+    opacity: 0;
+    transform: translateY(20px); /* Start from below */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+#imageContainer img.show {
+    opacity: 1;
+    transform: translateY(0);  /* Slide to its normal position */
+}
+
+/* Dark theme styling */
+.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
