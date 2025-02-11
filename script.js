@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
         })
         .then(fetchedData => {
-            data = fetchedData.agents; // Update to use the 'agents' key
+            data = fetchedData.agents || []; // Make sure we have the agents array
             console.log("Fetched data: ", data);  // Debug: Check if data is loaded properly
         })
         .catch(error => {
@@ -68,16 +68,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up the button click listener to trigger the image generation
-    button.addEventListener("click", generateRandomImage);
+    if (button) {
+        button.addEventListener("click", generateRandomImage);
+    } else {
+        console.error("Generate button not found!");
+    }
 
     // Reset button functionality
-    resetButton.addEventListener("click", function() {
-        imageContainer.innerHTML = "";
-        nameContainer.innerHTML = "";
-    });
+    if (resetButton) {
+        resetButton.addEventListener("click", function() {
+            imageContainer.innerHTML = "";
+            nameContainer.innerHTML = "";
+        });
+    } else {
+        console.error("Reset button not found!");
+    }
 
     // Toggle dark/light theme
-    toggleThemeButton.addEventListener("click", function() {
-        document.body.classList.toggle("dark-theme");
-    });
+    if (toggleThemeButton) {
+        toggleThemeButton.addEventListener("click", function() {
+            document.body.classList.toggle("dark-theme");
+        });
+    } else {
+        console.error("Toggle theme button not found!");
+    }
 });
