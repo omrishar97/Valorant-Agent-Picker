@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://omrishar97.github.io/Valorant-Agent-Picker/sitemap.xml
