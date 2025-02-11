@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const imageContainer = document.getElementById("imageContainer");
     const nameContainer = document.getElementById("nameContainer");
     const spinner = document.getElementById("loadingSpinner");
-    const searchInput = document.getElementById("searchInput");
     const resetButton = document.getElementById("resetButton");
     const toggleThemeButton = document.getElementById("toggleTheme");
 
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch('data.json')
         .then(response => response.json())
         .then(fetchedData => {
-            data = fetchedData.images; // Save the images data to use later
+            data = fetchedData.agents; // Update to use the 'agents' key
             preloadImages(data); // Preload images
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -32,26 +31,26 @@ document.addEventListener("DOMContentLoaded", function() {
         imageContainer.innerHTML = "";   // Clear previous agent image
         nameContainer.innerText = "";    // Clear previous name
 
-        // Disable the button
+        // Disable the button to prevent multiple clicks
         button.disabled = true;
 
-        // Get a random image object from the images array
-        const randomImage = data[Math.floor(Math.random() * data.length)];
+        // Get a random agent from the 'agents' array
+        const randomAgent = data[Math.floor(Math.random() * data.length)];
 
-        // Create an image element for the random image
+        // Create an image element for the random agent
         const img = new Image();
-        img.src = randomImage.src;  // Set the source from the random image
-        img.alt = randomImage.name; // Use the name as the alt text
+        img.src = randomAgent.src;  // Set the source from the random agent
+        img.alt = randomAgent.name; // Use the name as the alt text
 
-        // Add error handling
+        // Add error handling for broken images
         img.onerror = function() {
-            img.src = 'fallback_image_url.jpg';  // Set a fallback image
+            img.src = 'fallback_image_url.jpg';  // Fallback image URL
             img.alt = 'Image failed to load';
         };
 
         // Create a text element for the agent name
         const name = document.createElement("p");
-        name.textContent = randomImage.name; // Set the name text
+        name.textContent = randomAgent.name; // Set the name text
 
         // Clear previous image and name, then append the new ones
         imageContainer.innerHTML = ""; // Clear previous image
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.disabled = false;
 
         // Save the selected agent's name to localStorage
-        localStorage.setItem("lastAgent", randomImage.name);
+        localStorage.setItem("lastAgent", randomAgent.name);
     }
 
     // Set up the button click listener to trigger the image generation
@@ -86,22 +85,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if (lastAgent) {
         nameContainer.innerText = lastAgent;
     }
-
-    // Search functionality
-    searchInput.addEventListener("input", function(event) {
-        const searchTerm = event.target.value.toLowerCase();
-        const filteredAgents = data.filter(agent => agent.name.toLowerCase().includes(searchTerm));
-
-        // Update display with filtered agents
-        if (filteredAgents.length > 0) {
-            const randomImage = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
-            nameContainer.innerText = randomImage.name;
-            imageContainer.innerHTML = `<img src="${randomImage.src}" alt="${randomImage.name}">`;
-        } else {
-            nameContainer.innerText = "No agent found";
-            imageContainer.innerHTML = "";
-        }
-    });
 
     // Toggle dark/light theme
     toggleThemeButton.addEventListener("click", function() {
