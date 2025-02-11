@@ -10,7 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fetch data from the JSON file once the page is loaded
     fetch('data.json')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load data.json');
+            }
+            return response.json();
+        })
         .then(fetchedData => {
             data = fetchedData.agents; // Update to use the 'agents' key
             console.log("Fetched data: ", data);  // Debug: Check if data is loaded properly
