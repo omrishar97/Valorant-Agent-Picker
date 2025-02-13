@@ -1,11 +1,10 @@
-/* Basic reset for margin, padding, and box-sizing */
+/* style.css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styling */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
@@ -18,202 +17,37 @@ body {
     flex-direction: column;
 }
 
-/* Hero Section */
-.hero {
-    background: url('https://images.unsplash.com/photo-1506748686215-b1cd05599880') no-repeat center center;
-    background-size: cover;
-    height: 100vh;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);  /* Semi-transparent overlay */
-}
-
-.hero h1, .hero p {
-    position: relative;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-}
-
-/* Call to Action (CTA) button styling */
-.cta-button {
-    background-color: #ff6f61;
-    padding: 15px 30px;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-}
-
-.cta-button:hover {
-    background-color: #ff4b3a;
-}
-
-/* Container for the button, image, and name */
 .container {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    width: 80%;
-    max-width: 400px;
+    width: 300px;
+    text-align: center;
 }
 
-/* Button styling */
-#generateButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#generateButton:hover {
-    background-color: #45a049;
-}
-
-/* Image container styling */
-#imageContainer {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-}
-
-/* Image styling (keeping original size and allowing resizing) */
-#imageContainer img {
-    display: block;
-    margin: 10px auto; /* Centers the image */
-    max-width: 100%; /* Make sure it fits within the container */
-    height: auto; /* Retain original aspect ratio */
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateY(20px); /* Start from below */
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-#imageContainer img.show {
-    opacity: 1;
-    transform: translateY(0);  /* Slide to its normal position */
-}
-
-/* Agent name container styling */
-#nameContainer {
-    margin-top: 15px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-#nameContainer.show {
-    opacity: 1;
-}
-
-/* Responsiveness: Adjustments for smaller screens */
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-        padding: 20px;
-    }
-
-    #generateButton {
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-
-    #nameContainer {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
-
-    .hero p {
-        font-size: 1.2rem;
-    }
-
-    .cta-button {
-        font-size: 1rem;
-        padding: 10px 20px;
-    }
-}
-
-#loadingSpinner {
-    font-size: 1.2rem;
-    color: #ff6f61;
-    margin-top: 20px;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-#imageContainer img {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-#imageContainer img.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Dark theme styling */
-.dark-theme {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-.dark-theme #generateButton {
-    background-color: #555;
-    color: white;
-}
-
-.dark-theme .cta-button {
+button {
     background-color: #ff6f61;
     color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
-.dark-theme .cta-button:hover {
+button:hover {
     background-color: #ff4b3a;
+}
+
+#imageContainer img {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.dark-theme {
+    background-color: #333;
+    color: white;
 }
