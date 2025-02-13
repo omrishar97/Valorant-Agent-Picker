@@ -23,35 +23,45 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
     function generateRandomImage() {
-        if (data.length === 0) return;
-
-        spinner.style.display = "block";
-        button.disabled = true;
-
-        const randomAgent = data[Math.floor(Math.random() * data.length)];
-        const img = new Image();
-        img.src = randomAgent.src || 'images/fallback.webp'; // Fallback in case no src is found
-        img.alt = randomAgent.name || 'Unknown Agent'; // Fallback name if not present
-        img.loading = "lazy";
-        img.width = 300;
-        img.height = 300;
-
-        img.onerror = function() {
-            img.src = 'images/fallback.webp';
-            img.alt = 'Image failed to load';
-        };
-
-        img.onload = function() {
-            imageContainer.innerHTML = "";
-            nameContainer.innerHTML = "";
-            imageContainer.appendChild(img);
-            nameContainer.innerHTML = `<p>${randomAgent.name}</p>`;
-            spinner.style.display = "none";
-            button.disabled = false;
-        };
+    if (data.length === 0) {
+        console.error("Data is empty!"); // Debugging
+        return;
     }
 
+    spinner.style.display = "block";
+    button.disabled = true;
+
+    const randomAgent = data[Math.floor(Math.random() * data.length)];
+    console.log("Selected agent:", randomAgent); // Debugging
+    console.log("Image path:", randomAgent.src); // NEW Debugging: Log the exact image path
+
+    const img = new Image();
+    img.src = randomAgent.src;
+    img.alt = randomAgent.name;
+    img.loading = "lazy";
+    img.width = 300;
+    img.height = 300;
+
+    img.onerror = function() {
+        console.error("Image failed to load:", img.src); // Debugging
+        img.src = 'images/fallback.webp'; // Use fallback if original fails
+        img.alt = 'Image failed to load';
+    };
+
+    img.onload = function() {
+        console.log("Image loaded successfully:", img.src); // NEW Debugging: Confirm image loads
+        imageContainer.innerHTML = "";
+        nameContainer.innerHTML = "";
+        imageContainer.appendChild(img);
+        nameContainer.innerHTML = `<p>${randomAgent.name}</p>`;
+        spinner.style.display = "none";
+        button.disabled = false;
+    };
+}
+
+
     button.addEventListener("click", generateRandomImage);
+    
     resetButton.addEventListener("click", function() {
         imageContainer.innerHTML = "";
         nameContainer.innerHTML = "";
