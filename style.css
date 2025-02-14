@@ -114,3 +114,18 @@ img.loaded {
 #imageContainer.shuffle {
     animation: shuffle 0.5s ease-out;
 }
+
+/* Add loading state for image container */
+#imageContainer.loading {
+    position: relative;
+}
+
+#imageContainer.loading::after {
+    content: "Loading...";
+    font-size: 1.2rem;
+    color: #ff6f61;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

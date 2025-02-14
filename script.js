@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         img.onerror = function () {
             console.error("Image failed to load:", img.src);
+            imageContainer.innerHTML = "<p>Failed to load agent image.</p>";
         };
 
         // Add shuffle class for animation
@@ -80,6 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
             spinner.style.display = "none";
             button.disabled = false;
         };
+
+        // Placeholder while image is loading
+        imageContainer.innerHTML = "<p>Loading...</p>";
     }
 
     button.addEventListener("click", generateRandomImage);
@@ -91,10 +95,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     themeToggleButton.addEventListener("click", function () {
         document.body.classList.toggle("dark-theme");
-        localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
-    });
-
-    if (localStorage.getItem('theme') === "dark-theme") {
-        document.body.classList.add("dark-theme");
-    }
-});
+        localStorage.setItem
