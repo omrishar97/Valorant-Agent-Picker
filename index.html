@@ -3,20 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valorant Agent Picker</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Agents</title>
 </head>
 <body>
-    <div class="container">
-        <button id="generateButton">Generate Random Agent</button>
-        <div id="imageContainer"></div>
-        <div id="nameContainer"></div>
-        <button id="resetButton">Reset</button>
-    </div>
 
-    <div id="loadingSpinner" style="display: none;">Loading...</div>
-    <button id="theme-toggle" class="cta-button">Toggle Dark Mode</button>
+    <div id="agents-container"></div>
 
-    <script src="script.js"></script>
+    <script>
+        // Fetch JSON data
+        fetch("agents.json") // Ensure this file is correctly linked in your project
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById("agents-container");
+
+                data.agents.forEach(agent => {
+                    const img = document.createElement("img");
+                    img.src = agent.src;
+                    img.alt = agent.name;
+                    img.referrerPolicy = "no-referrer"; // Fix potential CORS issues
+                    img.onerror = function() {
+                        console.error("Failed to load image:", img.src);
+                    };
+
+                    const name = document.createElement("p");
+                    name.textContent = agent.name;
+
+                    const agentDiv = document.createElement("div");
+                    agentDiv.appendChild(img);
+                    agentDiv.appendChild(name);
+
+                    container.appendChild(agentDiv);
+                });
+            })
+            .catch(error => console.error("Error loading JSON:", error));
+    </script>
+
 </body>
 </html>
