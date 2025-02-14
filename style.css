@@ -68,12 +68,9 @@ button:hover {
     filter: brightness(1); /* Ensure images are not too dark */
 }
 
-
-/* Style for nameContainer in dark mode */
 .dark-theme #nameContainer p {
-    color: white;  /* Ensure the text is visible on dark background */
+    color: white; /* Ensure the text is visible on dark background */
 }
-
 
 @media (max-width: 600px) {
     .container {
