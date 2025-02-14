@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agents</title>
+    <title>Valorant Agent Picker</title>
 </head>
 <body>
 
-    <div id="agents-container"></div>
+    <h1>Random Valorant Agent Picker</h1>
+    
+    <img id="agentImage" src="" alt="Agent Image" width="200">
+    <h2 id="agentName"></h2>
+    
+    <button onclick="pickRandomAgent()">Pick Random Agent</button>
 
     <script>
-        // Fetch JSON data
-        fetch("data.json") // Ensure this file is correctly linked in your project
+        let agents = [];  // Store agent data
+
+        // Load JSON file
+        fetch("data.json")
             .then(response => response.json())
             .then(data => {
-                const container = document.getElementById("agents-container");
-
-                data.agents.forEach(agent => {
-                    const img = document.createElement("img");
-                    img.src = agent.src;
-                    img.alt = agent.name;
-                    img.referrerPolicy = "no-referrer"; // Fix potential CORS issues
-                    img.onerror = function() {
-                        console.error("Failed to load image:", img.src);
-                    };
-
-                    const name = document.createElement("p");
-                    name.textContent = agent.name;
-
-                    const agentDiv = document.createElement("div");
-                    agentDiv.appendChild(img);
-                    agentDiv.appendChild(name);
-
-                    container.appendChild(agentDiv);
-                });
+                agents = data.agents; // Store agents from JSON
+                pickRandomAgent(); // Pick an agent when page loads
             })
             .catch(error => console.error("Error loading JSON:", error));
+
+        // Function to pick and display a random agent
+        function pickRandomAgent() {
+            if (agents.length === 0) return;
+
+            const randomIndex = Math.floor(Math.random() * agents.length);
+            const agent = agents[randomIndex];
+
+            document.getElementById("agentImage").src = agent.src;
+            document.getElementById("agentName").textContent = agent.name;
+        }
     </script>
 
 </body>
