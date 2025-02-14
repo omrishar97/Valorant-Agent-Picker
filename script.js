@@ -56,11 +56,27 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Image failed to load:", img.src);
         };
 
+        // Add shuffle class for animation
+        imageContainer.classList.add("shuffle");
+
         img.onload = function () {
+            console.log("Image loaded successfully:", img.src);
+
+            // Add fade-in effect
+            img.classList.add("loaded");
+
+            // Clear image and name before appending
             imageContainer.innerHTML = "";
             nameContainer.innerHTML = "";
+
+            // Append new image and name
             imageContainer.appendChild(img);
-            nameContainer.innerHTML = `<p>${randomAgent.name} - ${randomAgent.role}</p>`;
+            nameContainer.innerHTML = `<p>${randomAgent.name}</p>`;
+
+            // Remove shuffle class after animation ends
+            imageContainer.classList.remove("shuffle");
+
+            // Hide spinner and enable button
             spinner.style.display = "none";
             button.disabled = false;
         };

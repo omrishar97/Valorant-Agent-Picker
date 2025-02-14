@@ -49,6 +49,7 @@ button:hover {
     margin-top: 10px;
 }
 
+/* Spinner styles */
 #loadingSpinner {
     position: absolute;
     top: 50%;
@@ -72,9 +73,44 @@ button:hover {
     color: white; /* Ensure the text is visible on dark background */
 }
 
+/* Media queries for smaller screens */
 @media (max-width: 600px) {
     .container {
         width: 80%;
         padding: 20px;
     }
+}
+
+/* Fade-in effect for images */
+img {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* Shuffle animation */
+@keyframes shuffle {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    50% {
+        transform: scale(1) rotate(-10deg);
+    }
+    75% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Apply animation to image container when generating an agent */
+#imageContainer.shuffle {
+    animation: shuffle 0.5s ease-out;
 }
