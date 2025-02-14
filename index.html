@@ -8,11 +8,23 @@
 <body>
 
     <h1>Random Valorant Agent Picker</h1>
-    
+
+    <!-- Role Filter Dropdown -->
+    <label for="role-filter">Choose a Role:</label>
+    <select id="role-filter">
+        <option value="all">All</option>
+        <option value="Duelist">Duelist</option>
+        <option value="Initiator">Initiator</option>
+        <option value="Sentinel">Sentinel</option>
+        <option value="Controller">Controller</option>
+    </select>
+
+    <br><br>
+
     <img id="agentImage" src="" alt="Agent Image" width="200">
     <h2 id="agentName"></h2>
-    
-    <button onclick="pickRandomAgent()">Pick Random Agent</button>
+
+    <button id="randomize-btn">Pick Random Agent</button>
 
     <script>
         let agents = [];  // Store agent data
@@ -22,20 +34,32 @@
             .then(response => response.json())
             .then(data => {
                 agents = data.agents; // Store agents from JSON
-                pickRandomAgent(); // Pick an agent when page loads
             })
             .catch(error => console.error("Error loading JSON:", error));
 
-        // Function to pick and display a random agent
+        // Function to pick and display a random agent based on filter
         function pickRandomAgent() {
-            if (agents.length === 0) return;
+            const selectedRole = document.getElementById("role-filter").value;
 
-            const randomIndex = Math.floor(Math.random() * agents.length);
-            const agent = agents[randomIndex];
+            // Filter agents based on role selection
+            const filteredAgents = selectedRole === "all" ? agents : agents.filter(agent => agent.role === selectedRole);
 
-            document.getElementById("agentImage").src = agent.src;
-            document.getElementById("agentName").textContent = agent.name;
+            if (filteredAgents.length === 0) {
+                document.getElementById("agentImage").src = "";
+                document.getElementById("agentName").textContent = "No agents found for this role.";
+                return;
+            }
+
+            // Pick a random agent from the filtered list
+            const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
+
+            // Display the agent
+            document.getElementById("agentImage").src = randomAgent.src;
+            document.getElementById("agentName").textContent = randomAgent.name;
         }
+
+        // Event listener for button
+        document.getElementById("randomize-btn").addEventListener("click", pickRandomAgent);
     </script>
 
 </body>
