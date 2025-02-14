@@ -23,10 +23,10 @@
     <br><br>
 
     <!-- Loading Spinner -->
-    <div id="loadingSpinner" style="display: none;">Loading...</div>
+    <div id="loadingSpinner">Loading...</div>
 
     <!-- Image and Name Container -->
-    <div id="imageContainer">
+    <div id="imageContainer" class="loading">
         <img id="agentImage" src="" alt="Agent Image" width="200">
     </div>
     <h2 id="agentName"></h2>
@@ -55,6 +55,7 @@
             // Show loading spinner
             document.getElementById("loadingSpinner").style.display = "block";
             document.getElementById("randomize-btn").disabled = true;
+            document.getElementById("imageContainer").classList.add("loading");
 
             if (filteredAgents.length === 0) {
                 document.getElementById("agentImage").src = "";
@@ -66,6 +67,10 @@
 
             // Pick a random agent from the filtered list
             const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
+
+            // Apply shuffle animation
+            const imageContainer = document.getElementById("imageContainer");
+            imageContainer.classList.add("shuffle");
 
             // Display the agent with a fade-in effect
             const agentImage = document.getElementById("agentImage");
@@ -79,6 +84,7 @@
             // Hide loading spinner and enable the button again
             document.getElementById("loadingSpinner").style.display = "none";
             document.getElementById("randomize-btn").disabled = false;
+            imageContainer.classList.remove("loading"); // Remove loading class
         }
 
         // Reset button functionality
