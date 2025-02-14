@@ -15,6 +15,7 @@ body {
     text-align: center;
     flex-direction: column;
     transition: background-color 0.3s ease; /* Smooth transition for theme toggle */
+    padding: 10px;
 }
 
 .container {
@@ -28,42 +29,54 @@ body {
 }
 
 button {
-    background-color: #ff6f61;
+    background-color: #ff4655; /* Valorant red */
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
     margin: 10px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: #ff4b3a;
+    background-color: #cc3742;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 #imageContainer img {
     width: 100px;
     height: auto;
     margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Spinner styles */
-#loadingSpinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-    color: #ff6f61;
-    display: none; /* Initially hidden */
+img.loaded {
+    opacity: 1;
 }
 
 /* Dark theme */
 .dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-theme button {
     background-color: #333;
-    color: white;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+.dark-theme select {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
 }
 
 .dark-theme #imageContainer img {
@@ -74,25 +87,34 @@ button:hover {
     color: white; /* Ensure the text is visible on dark background */
 }
 
-/* Media queries for smaller screens */
-@media (max-width: 600px) {
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    body {
+        text-align: center;
+    }
+
     .container {
         width: 80%;
         padding: 20px;
     }
+
+    #imageContainer {
+        width: 100%;
+    }
+
+    img {
+        width: 80%; /* Make images responsive */
+        max-width: 300px;
+    }
+
+    button {
+        width: 90%;
+        max-width: 250px;
+        padding: 12px;
+        font-size: 16px;
+    }
 }
 
-/* Fade-in effect for images */
-img {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-img.loaded {
-    opacity: 1;
-}
-
-/* Shuffle animation */
 @keyframes shuffle {
     0% {
         transform: scale(1) rotate(0deg);
@@ -129,29 +151,4 @@ img.loaded {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Media queries for smaller screens */
-@media (max-width: 600px) {
-    body {
-        font-size: 14px;
-    }
-
-    .container {
-        width: 90%;
-        padding: 15px;
-    }
-
-    .image-container {
-        width: 100%;
-    }
-
-    .agent-image {
-        width: 100%;
-    }
 }
