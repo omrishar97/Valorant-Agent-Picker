@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
         imageContainer.innerHTML = "<p>Loading...</p>";
     }
 
+    // Event listeners for the buttons and theme toggle
     button.addEventListener("click", generateRandomImage);
 
     resetButton.addEventListener("click", function () {
@@ -95,4 +96,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
     themeToggleButton.addEventListener("click", function () {
         document.body.classList.toggle("dark-theme");
-        localStorage.setItem
+        localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
+    });
+
+    // Preload image function for optimization
+    function preloadImage(src) {
+        const img = new Image();
+        img.src = src;
+    }
+
+    // This function is for the role-based filtering (assuming role-filter is a dropdown)
+    function pickRandomAgent() {
+        const selectedRole = document.getElementById("role-filter").value;
+        const filteredAgents = agents.filter(agent => agent.role.toLowerCase() === selectedRole.toLowerCase() || selectedRole === "");
+
+        if (filteredAgents.length === 0) {
+            document.getElementById("agentImage").src = "";
+            document.getElementById("agentName").textContent = "No agents found for this role.";
+            document.getElementById("loadingSpinner").style.display = "none"; // Hide spinner here
+            document.getElementById("randomize-btn").disabled = false;
+            return;
+        }
+
+        const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
+        document.getElementById("agentName").textContent = randomAgent.name;
+
+        const agentImage = document.getElementById("agentImage");
+        agentImage.style.opacity = 0; // Fade out the image
+        agentImage.src = randomAgent.src;
+
+        // Error handling: show a default image if the image fails to load
+        agentImage.onerror = function() {
+            agentImage.src = "default-image.jpg"; // replace with your fallback image
+        };
+
+        // Preload the image before displaying it
+        preloadImage(randomAgent.src);
+
+        // Fade in the image after it has loaded
+        agentImage.onload = function() {
+            agentImage.style.opacity = 1;
+            document.getElementById("loadingSpinner").style.display = "none";
+            document.getElementById("randomize-btn").disabled = false;
+        };
+
+        document.getElementById("loadingSpinner").style.display = "inline-block";
+        document.getElementById("randomize-btn").disabled = true; // Disable button while loading
+    }
+
+    // Add event listeners for agent randomizing
+    document.getElementById("randomize-btn").addEventListener("click", pickRandomAgent);
+
+    // Reset agent function
+    function resetAgent() {
+        document.getElementById("agentImage").src = "";
+        document.getElementById("agentName").textContent = "";
+    }
+
+    // Call this function at the end
+    addEventListeners();
+
+    // Additional helper functions for theme and agent selection
+    function addEventListeners() {
+        document.getElementById("randomize-btn").addEventListener("click", pickRandomAgent);
+        document.getElementById("resetButton").addEventListener("click", resetAgent);
+        document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle("dark-theme");
+        localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
+    }
+});

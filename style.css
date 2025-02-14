@@ -130,3 +130,28 @@ img.loaded {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .image-container {
+        width: 100%;
+    }
+
+    .agent-image {
+        width: 100%;
+    }
+}
