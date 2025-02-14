@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant Agent Picker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -18,13 +19,22 @@
         <option value="Sentinel">Sentinel</option>
         <option value="Controller">Controller</option>
     </select>
-
+    
     <br><br>
 
-    <img id="agentImage" src="" alt="Agent Image" width="200">
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" style="display: none;">Loading...</div>
+
+    <!-- Image and Name Container -->
+    <div id="imageContainer">
+        <img id="agentImage" src="" alt="Agent Image" width="200">
+    </div>
     <h2 id="agentName"></h2>
 
+    <!-- Buttons -->
     <button id="randomize-btn">Pick Random Agent</button>
+    <button id="resetButton">Reset</button>
+    <button id="theme-toggle">Toggle Theme</button>
 
     <script>
         let agents = [];  // Store agent data
@@ -40,25 +50,55 @@
         // Function to pick and display a random agent based on filter
         function pickRandomAgent() {
             const selectedRole = document.getElementById("role-filter").value;
-
-            // Filter agents based on role selection
             const filteredAgents = selectedRole === "all" ? agents : agents.filter(agent => agent.role === selectedRole);
+
+            // Show loading spinner
+            document.getElementById("loadingSpinner").style.display = "block";
+            document.getElementById("randomize-btn").disabled = true;
 
             if (filteredAgents.length === 0) {
                 document.getElementById("agentImage").src = "";
                 document.getElementById("agentName").textContent = "No agents found for this role.";
+                document.getElementById("loadingSpinner").style.display = "none";
+                document.getElementById("randomize-btn").disabled = false;
                 return;
             }
 
             // Pick a random agent from the filtered list
             const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
 
-            // Display the agent
-            document.getElementById("agentImage").src = randomAgent.src;
+            // Display the agent with a fade-in effect
+            const agentImage = document.getElementById("agentImage");
+            agentImage.src = randomAgent.src;
+            agentImage.classList.remove("loaded");  // Reset fade effect
+            agentImage.onload = function() {
+                agentImage.classList.add("loaded");  // Apply fade-in effect
+            };
             document.getElementById("agentName").textContent = randomAgent.name;
+
+            // Hide loading spinner and enable the button again
+            document.getElementById("loadingSpinner").style.display = "none";
+            document.getElementById("randomize-btn").disabled = false;
         }
 
-        // Event listener for button
+        // Reset button functionality
+        document.getElementById("resetButton").addEventListener("click", function() {
+            document.getElementById("agentImage").src = "";
+            document.getElementById("agentName").textContent = "";
+        });
+
+        // Theme toggle functionality
+        document.getElementById("theme-toggle").addEventListener("click", function() {
+            document.body.classList.toggle("dark-theme");
+            localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
+        });
+
+        // Load the theme from localStorage if available
+        if (localStorage.getItem('theme') === "dark-theme") {
+            document.body.classList.add("dark-theme");
+        }
+
+        // Event listener for the randomize button
         document.getElementById("randomize-btn").addEventListener("click", pickRandomAgent);
     </script>
 
