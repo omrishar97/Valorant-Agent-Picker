@@ -14,7 +14,7 @@ body {
     height: 100vh;
     text-align: center;
     flex-direction: column;
-    transition: background-color 0.3s ease; /* Smooth transition for theme toggle */
+    transition: background-color 0.3s ease;
     padding: 10px;
 }
 
@@ -49,16 +49,26 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* Image Container Fixes */
+#imageContainer {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
 #imageContainer img {
-    width: 100px;
+    width: auto;
+    max-width: 100%;
     height: auto;
-    margin-top: 10px;
-    opacity: 0;
+    display: block;
+    margin: 10px auto;
+    opacity: 0; /* Initially hidden */
     transition: opacity 0.5s ease-in-out;
 }
 
 img.loaded {
-    opacity: 1;
+    opacity: 1; /* Fade in effect */
 }
 
 /* Dark theme */
@@ -80,11 +90,11 @@ img.loaded {
 }
 
 .dark-theme #imageContainer img {
-    filter: brightness(1); /* Ensure images are not too dark */
+    filter: brightness(1);
 }
 
 .dark-theme #nameContainer p {
-    color: white; /* Ensure the text is visible on dark background */
+    color: white;
 }
 
 /* Media queries for responsiveness */
@@ -103,7 +113,7 @@ img.loaded {
     }
 
     img {
-        width: 80%; /* Make images responsive */
+        width: 80%;
         max-width: 300px;
     }
 
@@ -115,6 +125,7 @@ img.loaded {
     }
 }
 
+/* Keyframes for Shuffle Animation */
 @keyframes shuffle {
     0% {
         transform: scale(1) rotate(0deg);
@@ -138,11 +149,7 @@ img.loaded {
     animation: shuffle 0.5s ease-out;
 }
 
-/* Add loading state for image container */
-#imageContainer.loading {
-    position: relative;
-}
-
+/* Loading state */
 #imageContainer.loading::after {
     content: "Loading...";
     font-size: 1.2rem;
