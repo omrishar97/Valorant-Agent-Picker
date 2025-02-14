@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const resetButton = document.getElementById("resetButton");
     const themeToggleButton = document.getElementById("theme-toggle");
     const roleFilter = document.getElementById("role-filter");
-
+    const randomizeButton = document.getElementById("randomize-btn");
     let agents = [];
 
     // Fetch agent data
-    fetch('data.json')
+    fetch("data.json")
         .then(response => response.json())
         .then(fetchedData => {
             if (fetchedData.agents && fetchedData.agents.length > 0) {
@@ -20,19 +20,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
-            alert('Failed to load agent data. Please try again later.');
+            console.error("Error fetching data:", error);
+            alert("Failed to load agent data. Please try again later.");
         });
 
-    function generateRandomImage() {
+    function generateRandomAgent() {
         if (agents.length === 0) {
-            console.error("Data is empty!"); // Debugging
+            console.error("Agent data is empty!");
             return;
         }
 
+        // Show loading spinner and disable button
         spinner.style.display = "block";
         button.disabled = true;
+        randomizeButton.disabled = true;
 
+        // Get selected role and filter agents
         const selectedRole = roleFilter.value;
         const filteredAgents = selectedRole === "all" ? agents : agents.filter(agent => agent.role === selectedRole);
 
@@ -41,10 +44,14 @@ document.addEventListener("DOMContentLoaded", function () {
             nameContainer.innerHTML = "<p>No agents found for this role.</p>";
             spinner.style.display = "none";
             button.disabled = false;
+            randomizeButton.disabled = false;
             return;
         }
 
+        // Pick a random agent
         const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
+
+        // Create and preload image
         const img = new Image();
         img.src = randomAgent.src;
         img.alt = randomAgent.name;
@@ -57,49 +64,46 @@ document.addEventListener("DOMContentLoaded", function () {
             imageContainer.innerHTML = "<p>Failed to load agent image.</p>";
         };
 
-        // Add shuffle class for animation
+        // Animation effect
         imageContainer.classList.add("shuffle");
 
         img.onload = function () {
             console.log("Image loaded successfully:", img.src);
 
-            // Add fade-in effect
+            // Fade-in effect
             img.classList.add("loaded");
 
-            // Clear previous content
+            // Clear previous content and append new image and name
             imageContainer.innerHTML = "";
-            nameContainer.innerHTML = "";
-
-            // Append new image and name
-            imageContainer.appendChild(img);
             nameContainer.innerHTML = `<p>${randomAgent.name}</p>`;
+            imageContainer.appendChild(img);
 
-            // Remove shuffle class after animation ends
+            // Remove shuffle class after animation
             imageContainer.classList.remove("shuffle");
 
-            // Hide spinner and enable button
+            // Hide spinner and re-enable buttons
             spinner.style.display = "none";
             button.disabled = false;
+            randomizeButton.disabled = false;
         };
 
-        // Placeholder while image is loading
+        // Show placeholder while loading
         imageContainer.innerHTML = "<p>Loading...</p>";
     }
 
-    // Reset function
     function resetAgent() {
         imageContainer.innerHTML = "";
         nameContainer.innerHTML = "";
     }
 
-    // Theme Toggle
     function toggleTheme() {
         document.body.classList.toggle("dark-theme");
-        localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
+        localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark-theme" : "");
     }
 
-    // Event Listeners
-    button.addEventListener("click", generateRandomImage);
+    // Event listeners
+    button.addEventListener("click", generateRandomAgent);
+    randomizeButton.addEventListener("click", generateRandomAgent);
     resetButton.addEventListener("click", resetAgent);
     themeToggleButton.addEventListener("click", toggleTheme);
 });
