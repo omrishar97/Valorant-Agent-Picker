@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant Agent Picker</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- ✅ Corrected the CSS file path for GitHub Pages -->
+    <link rel="stylesheet" href="https://omrishar97.github.io/Valorant-Agent-Picker/styles.css">
 </head>
 <body>
     <h1>Valorant Agent Picker</h1>
 
+    <!-- Role Selection Dropdown -->
+    <label for="role-filter">Select Role:</label>
     <select id="role-filter">
         <option value="all">All Roles</option>
         <option value="Duelist">Duelist</option>
@@ -17,16 +21,25 @@
         <option value="Sentinel">Sentinel</option>
     </select>
 
+    <!-- Buttons -->
     <button id="generateButton">Pick Agent</button>
     <button id="randomize-btn">Randomize</button>
     <button id="resetButton">Reset</button>
     <button id="theme-toggle">Toggle Theme</button>
 
+    <!-- Loading Spinner -->
     <div id="loadingSpinner" style="display: none;">Loading...</div>
-    
+
+    <!-- Image & Name Display Containers -->
     <div id="imageContainer"></div>
     <div id="nameContainer"></div>
 
-    <script src="script.js"></script>
+    <!-- Display Message if JavaScript is Disabled -->
+    <noscript>
+        <p style="color: red;">JavaScript is required for this page to work properly.</p>
+    </noscript>
+
+    <!-- ✅ Corrected the JavaScript file path for GitHub Pages -->
+    <script src="https://omrishar97.github.io/Valorant-Agent-Picker/script.js"></script>
 </body>
 </html>
