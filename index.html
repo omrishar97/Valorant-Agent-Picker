@@ -4,109 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valorant Agent Picker</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>Valorant Agent Picker</h1>
 
-    <h1>Random Valorant Agent Picker</h1>
-
-    <!-- Role Filter Dropdown -->
-    <label for="role-filter">Choose a Role:</label>
     <select id="role-filter">
-        <option value="all">All</option>
+        <option value="all">All Roles</option>
         <option value="Duelist">Duelist</option>
         <option value="Initiator">Initiator</option>
-        <option value="Sentinel">Sentinel</option>
         <option value="Controller">Controller</option>
+        <option value="Sentinel">Sentinel</option>
     </select>
+
+    <button id="generateButton">Pick Agent</button>
+    <button id="randomize-btn">Randomize</button>
+    <button id="resetButton">Reset</button>
+    <button id="theme-toggle">Toggle Theme</button>
+
+    <div id="loadingSpinner" style="display: none;">Loading...</div>
     
-    <br><br>
+    <div id="imageContainer"></div>
+    <div id="nameContainer"></div>
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner">Loading...</div>
-
-    <!-- Image and Name Container -->
-    <div id="imageContainer" class="loading">
-        <img id="agentImage" src="" alt="Agent Image" width="200">
-    </div>
-    <h2 id="agentName"></h2>
-
-    <!-- Buttons -->
-    <button id="randomize-btn" aria-label="Pick a random agent">Pick Random Agent</button>
-    <button id="resetButton" aria-label="Reset selected agent">Reset</button>
-    <button id="theme-toggle" aria-label="Toggle between light and dark themes">Toggle Theme</button>
-
-    <script>
-        let agents = [];  // Store agent data
-
-        // Load JSON file
-        fetch("data.json")
-            .then(response => response.json())
-            .then(data => {
-                agents = data.agents; // Store agents from JSON
-            })
-            .catch(error => console.error("Error loading JSON:", error));
-
-        // Function to pick and display a random agent based on filter
-        function pickRandomAgent() {
-            const selectedRole = document.getElementById("role-filter").value;
-            const filteredAgents = selectedRole === "all" ? agents : agents.filter(agent => agent.role === selectedRole);
-
-            // Show loading spinner
-            document.getElementById("loadingSpinner").style.display = "block";
-            document.getElementById("randomize-btn").disabled = true;
-            document.getElementById("imageContainer").classList.add("loading");
-
-            if (filteredAgents.length === 0) {
-                document.getElementById("agentImage").src = "";
-                document.getElementById("agentName").textContent = "No agents found for this role.";
-                document.getElementById("loadingSpinner").style.display = "none";
-                document.getElementById("randomize-btn").disabled = false;
-                return;
-            }
-
-            // Pick a random agent from the filtered list
-            const randomAgent = filteredAgents[Math.floor(Math.random() * filteredAgents.length)];
-
-            // Apply shuffle animation
-            const imageContainer = document.getElementById("imageContainer");
-            imageContainer.classList.add("shuffle");
-
-            // Display the agent with a fade-in effect
-            const agentImage = document.getElementById("agentImage");
-            agentImage.src = randomAgent.src;
-            agentImage.classList.remove("loaded");  // Reset fade effect
-            agentImage.onload = function() {
-                agentImage.classList.add("loaded");  // Apply fade-in effect
-            };
-            document.getElementById("agentName").textContent = randomAgent.name;
-
-            // Hide loading spinner and enable the button again
-            document.getElementById("loadingSpinner").style.display = "none";
-            document.getElementById("randomize-btn").disabled = false;
-            imageContainer.classList.remove("loading"); // Remove loading class
-        }
-
-        // Reset button functionality
-        document.getElementById("resetButton").addEventListener("click", function() {
-            document.getElementById("agentImage").src = "";
-            document.getElementById("agentName").textContent = "";
-        });
-
-        // Theme toggle functionality
-        document.getElementById("theme-toggle").addEventListener("click", function() {
-            document.body.classList.toggle("dark-theme");
-            localStorage.setItem('theme', document.body.classList.contains("dark-theme") ? "dark-theme" : "");
-        });
-
-        // Load the theme from localStorage if available
-        if (localStorage.getItem('theme') === "dark-theme") {
-            document.body.classList.add("dark-theme");
-        }
-
-        // Event listener for the randomize button
-        document.getElementById("randomize-btn").addEventListener("click", pickRandomAgent);
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
